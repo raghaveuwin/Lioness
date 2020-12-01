@@ -32,5 +32,3 @@ How to run the file:
 
 The compressed file will be stored as Encoded.txt and the output file will be stored as Decoded.txt
 
-The program works well with the example provided on canvas, for other data the efficiency depends 
-on the the repeating data values and the size of data.
