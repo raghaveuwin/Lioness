@@ -1,3 +1,8 @@
+#Name: Gopika Raghavendran
+#StudentID: 105189824
+#Course: ELEC8900-4-R-2020F Information Transmission Systems
+#Submitted to: Dr. Kemal Tepe
+
 import sys
 from struct import*
 filename="plain.txt"
