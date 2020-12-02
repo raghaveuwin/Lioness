@@ -5,7 +5,7 @@
 
 import sys
 from struct import*
-filename="plain.txt"
+filename="plain.txt" #Storing the message inside plain.txt file for applying LZW compression algorithm
 fileHandle=open(filename,"r")
 message=fileHandle.read()
 
@@ -13,12 +13,11 @@ if (len(sys.argv)>1):
         message=str(sys.argv[1])
 
 def compress(uncompressed):
-    """Compress a string to a list of output symbols."""
+    """Compressing a string to a list of output symbols."""
  
-    # Build the dictionary.
+    # Building the dictionary.
     dict_size = 256
-    dictionary = dict((chr(i), i) for i in range(dict_size))
- 
+    dictionary = dict((chr(i), i) for i in range(dict_size)) 
     w = ""
     result = []
     for c in uncompressed:
@@ -27,19 +26,16 @@ def compress(uncompressed):
             w = wc
         else:
             result.append(dictionary.get(w,45))
-            # Add wc to the dictionary.
-            dictionary[wc] = dict_size
+            dictionary[wc] = dict_size  # Add wc to the dictionary.
             dict_size += 1
             w = c
- 
-    # Output the code for w.
+    
     if w:
         result.append(dictionary[w])
     return result
  
- 
 def decompress(compressed):
-    """Decompress a list of output ks to a string."""
+    """Decompressing a list of output ks to a string."""
     debug_str=""
     from io import StringIO
     
@@ -58,21 +54,19 @@ def decompress(compressed):
         else:
             raise ValueError('Bad compressed k: %s' % k)
         result.write(entry)
- 
-        # Add w+entry[0] to the dictionary.
-        dictionary[dict_size] = w + entry[0]
+  
+        dictionary[dict_size] = w + entry[0] # Add w+entry[0] to the dictionary.
         debug_str += "Adding: ["+str(dict_size)+"]\t"+dictionary[dict_size]+"\n"
         dict_size += 1
         w = entry
     return result.getvalue(),debug_str
 
- 
-# How to use:
+# Input and Compressed Data:
 print("Input: ", message)
 compressed = compress(message)
 print("\nCompressed Data:\n", compressed)
 
-##Compressed file extracted
+# Compressed file extracted
 output_file = open("Encoded.txt", "w")
 for data in compressed:
     data = str(data)
@@ -80,15 +74,17 @@ for data in compressed:
     output_file.write(data)
 output_file.close()
 
+# Decompressed Data:                          
 decompressed, debug_str = decompress(compressed)
 print("\nDecompressed Data:\n", (decompressed))
 
-##De-Compressed file extracted
+# De-Compressed file extracted
 decodedfile = open("Decoded.txt", "w")
 for data in decompressed:
     data = str(data)
     decodedfile.write(data)
 decodedfile.close()
 
-print("\n\nDebug")
+# Re-Vamped Dictionary with all index possibilities from message                         
+print("\n\nUpdated Dictionary:\n")
 print(debug_str)
