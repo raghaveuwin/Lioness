@@ -36,7 +36,7 @@ def compress(uncompressed):
  
 def decompress(compressed):
     """Decompressing a list of output ks to a string."""
-    debug_str=""
+    DS=""
     from io import StringIO
     
     # Build the dictionary.
@@ -51,15 +51,13 @@ def decompress(compressed):
             entry = dictionary[k]
         elif k == dict_size:
             entry = w + w[0]
-        else:
-            raise ValueError('Bad compressed k: %s' % k)
         result.write(entry)
   
         dictionary[dict_size] = w + entry[0] # Add w+entry[0] to the dictionary.
-        debug_str += "Adding: ["+str(dict_size)+"]\t"+dictionary[dict_size]+"\n"
+        DS += "DictNew_Index: ["+str(dict_size)+"]\t"+dictionary[dict_size]+"\n"
         dict_size += 1
         w = entry
-    return result.getvalue(),debug_str
+    return result.getvalue(),DS
 
 # Input and Compressed Data:
 print("Input: ", message)
@@ -75,7 +73,7 @@ for data in compressed:
 output_file.close()
 
 # Decompressed Data:                          
-decompressed, debug_str = decompress(compressed)
+decompressed, DS = decompress(compressed)
 print("\nDecompressed Data:\n", (decompressed))
 
 # De-Compressed file extracted
@@ -87,4 +85,4 @@ decodedfile.close()
 
 # Re-Vamped Dictionary with all index possibilities from message                         
 print("\n\nUpdated Dictionary:\n")
-print(debug_str)
+print(DS)
