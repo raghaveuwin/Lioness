@@ -10,13 +10,13 @@ fileHandle=open(filename,"r")
 message=fileHandle.read()
 
 if (len(sys.argv)>1):
-        message=str(sys.argv[1])
+        message=str(sys.argv[1]) #Passing arguments as an array
 
 def compress(uncompressed):
     """Compressing a string to a list of output symbols."""
  
     # Building the dictionary.
-    dict_size = 256
+    dict_size = 256 #ASCII characters
     dictionary = dict((chr(i), i) for i in range(dict_size)) 
     w = ""
     result = []
